@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhachat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 19:51:59 by akhachat          #+#    #+#             */
-/*   Updated: 2022/03/03 19:52:15 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/03/17 16:37:54 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,13 @@ void	ft_export(char *str);
 char	**ft_split_for_export(char const *s);
 char	**free_matrix(char **s);
 void	check_quotes(char *str);
+int		count_list_elements(void);
+void	fill_env(char **env);
+char	**list_to_arr(void);
+t_list	*find_element(char *var_name);
+void	check_oldpwd(char *value);
+void	ft_cd(char *p);
+int 	is_builtins(char *cmd);
+
 
 #endif

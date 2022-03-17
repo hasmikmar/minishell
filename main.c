@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhachat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 19:51:34 by akhachat          #+#    #+#             */
-/*   Updated: 2022/03/03 19:51:36 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/03/17 14:39:51 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	// (void)env;
+	fill_env(env);
 	while (1)
 	{
 		str = readline("minishell: ");
@@ -29,7 +29,9 @@ int	main(int argc, char **argv, char **env)
 			free(str);
 			ft_error("exit", 0);
 		}
-		start(env, str);
+		check_oldpwd("HOMW");
+
+		// start(env, str);
 	}
 	free(str);
 	return (0);

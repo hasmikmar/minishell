@@ -3,39 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhachat <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 19:57:50 by akhachat          #+#    #+#             */
-/*   Updated: 2022/03/03 19:57:52 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/03/17 14:39:51 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_quotes(char *str)
+void	check_oldpwd(char *value)
 {
-	int	i;
+	t_list	*tmp;
+	t_list	*old;
 
-	i = 0;
-	while (str[i])
+	old = find_element("OLDPWD");
+	if (!old)
 	{
-		if (str[i] && str[i] == '\'')
-		{
-			i++;
-			while (str[i] != '\'')
-				i++;
-			if (str[i] == '\0')
-				ft_error("Quotation error", 0);
-		}
-		else if (str[i] == '\"')
-		{
-			i++;
-			while (str[i] && str[i] != '\"')
-				i++;
-			printf("%c\n", str[i]);
-			if (str[i] == '\0')
-				ft_error("Quotation error", 0);
-		}
-		i++;
+		tmp = ft_lstnew("OLDPWD", without_quotes(value), 1);
+		ft_lstadd_front(&g_g.lenv, tmp);
 	}
+	else
+		old->val = without_quotes(value);
 }
