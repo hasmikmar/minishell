@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tapetros <tapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/03 19:57:50 by akhachat          #+#    #+#             */
-/*   Updated: 2022/03/17 14:39:51 by akhachat         ###   ########.fr       */
+/*   Created: 2022/03/03 19:57:50 by tapetros          #+#    #+#             */
+/*   Updated: 2022/03/18 14:48:21 by tapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,5 @@ char	*without_quotes(char *str)
 		i++;
 	}
 	res[j] = '\0';
-	free(str);
 	return (res);
 }
-
-// char	**free_matrix(char **s)
-// {
-// 	int	idx;
-
-// 	idx = -1;
-// 	while (s[++idx] != NULL)
-// 		free(s[idx]);
-// 	free(s);
-// 	return (NULL);
-// }

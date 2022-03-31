@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tapetros <tapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/03 19:57:50 by akhachat          #+#    #+#             */
-/*   Updated: 2022/03/17 14:39:51 by akhachat         ###   ########.fr       */
+/*   Created: 2022/03/03 19:57:50 by tapetros          #+#    #+#             */
+/*   Updated: 2022/03/18 14:48:21 by tapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,17 @@ void	check_oldpwd(char *value)
 	}
 	else
 		old->val = without_quotes(value);
+}
+
+int	is_space(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ')
+			return (0);
+	}
+	return (1);
 }

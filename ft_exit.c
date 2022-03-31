@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tapetros <tapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/09 19:58:29 by akhachat          #+#    #+#             */
-/*   Updated: 2022/03/17 14:39:51 by akhachat         ###   ########.fr       */
+/*   Created: 2022/03/09 19:58:29 by tapetros          #+#    #+#             */
+/*   Updated: 2022/03/18 14:48:22 by tapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,11 @@ void	ft_atoi_exit_2(char *str, int i, int num, int flag)
 		printf("exit\nexit: too many arguments\n");
 }
 
-//max_value not handled
 void	ft_atoi_exit(char *str)
 {
-	int		i;
-	long	num;
-	int		flag;
+	int					i;
+	unsigned long long	num;
+	int					flag;
 
 	i = 0;
 	num = 0;
@@ -76,8 +75,12 @@ void	ft_atoi_exit(char *str)
 	while (str[i] >= '0' && str[i] <= '9' && str[i] != '\0')
 	{
 		num = num * 10;
-		num = num + str[i] - '0';
-		i++;
+		num = num + str[i++] - '0';
+	}
+	if (num > 9223372036854775807)
+	{
+		printf("exit\nexit: %llu", num);
+		ft_error(": numeric argument required", 255);
 	}
 	ft_atoi_exit_2(str, i, num, flag);
 }

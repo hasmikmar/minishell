@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tapetros <tapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/30 14:31:54 by akhachat          #+#    #+#             */
-/*   Updated: 2022/03/17 14:39:51 by akhachat         ###   ########.fr       */
+/*   Created: 2021/01/30 14:31:54 by tapetros          #+#    #+#             */
+/*   Updated: 2022/03/18 14:48:21 by tapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		return (0);
 }
 
-int	ft_strncmp_quote(const char *s1, const char *s2, size_t n)
+int	ft_strncmp_quote(const char *s1, const char *s2)
 {
 	size_t			i;
 	size_t			j;
@@ -40,19 +40,14 @@ int	ft_strncmp_quote(const char *s1, const char *s2, size_t n)
 
 	st1 = (unsigned char *)s1;
 	st2 = (unsigned char *)s2;
-	if (!n)
-		return (0);
 	i = 0;
 	j = 0;
-	while ((i < n && st1[i] && st2[j] && st1[i] == st2[j])
+	while ((st1[i] && st2[j] && st1[i] == st2[j])
 		|| st1[i] == '\'' || st1[i] == '\"')
 	{
 		if (st1[i] != '\"' && st1[i] != '\'')
 			j++;
 		i++;
 	}
-	if (i < n)
-		return (st1[i] - st2[j]);
-	else
-		return (0);
+	return (st1[i] - st2[j]);
 }

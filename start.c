@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tapetros <tapetros@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/05 15:52:59 by akhachat          #+#    #+#             */
-/*   Updated: 2022/03/17 14:39:51 by akhachat         ###   ########.fr       */
+/*   Created: 2022/03/05 15:52:59 by tapetros          #+#    #+#             */
+/*   Updated: 2022/03/18 21:04:04 by tapetros         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,18 @@ void	fill_env(char **env)
 	free(str);
 }
 
-void	start(char **env, char *str)
+void	start(char *str)
 {
 	int		len;
 	char	**spl;
+	int		i;
 
-	(void)env;
-	// ft_cd(str);
-	// ft_pwd();
-	// printf("--------------------------------------------export\n");
-	// ft_export(str);
-	printf("--------------------------------------------env\n");
-	print_list();
-	// print_export();
-	// ft_unset("\"PATH\" PWD");
-	// printf("--------------------------------------------\n");
-	// print_list();
+	i = -1;
 	spl = ft_split(str, '|');
 	len = rows_amount(spl);
 	g_g.cmds = malloc(sizeof (t_cmds) * len);
 	if (!g_g.cmds)
 		ft_error("Can't malloc struct\n", 0);
+	while (spl[++i])
+		parsing(spl[i], i);
 }
