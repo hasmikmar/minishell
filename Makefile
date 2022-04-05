@@ -4,8 +4,8 @@ SRCS = $(shell find "." -name "*.c")
 
 OBJS = $(SRCS:.c=.o)
 
-LDFLAGS = -L /Users/hmargary/lib
-CPPFLAGS = -I /Users/hmargary/include
+LDFLAGS = -L /Users/akhachat/lib
+CPPFLAGS = -I /Users/akhachat/include
 
 CC = gcc
 

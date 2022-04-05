@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/04 17:32:38 by akhachat          #+#    #+#             */
+/*   Updated: 2022/04/04 18:10:22 by akhachat         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	ft_cancel(void)
@@ -22,7 +34,7 @@ static	void	reprompt(int sig)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
@@ -50,20 +62,14 @@ void	sig_init(void)
 //     exit(1);
 // }
 
-// void sig_init(void)
-// {
-//     signal(SIGINT, reprompt);
-//     signal(SIGQUIT, sigquit);
-// }
+void	sig_default(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
 
-// void sig_default(void)
-// {
-//     signal(SIGINT, SIG_DFL);
-//     signal(SIGQUIT, SIG_DFL);
-// }
-
-// void sig_ignore(void)
-// {
-//     signal(SIGINT, SIG_IGN);
-//     signal(SIGQUIT, SIG_IGN);
-// }
+void	sig_ignore(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+}

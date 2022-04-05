@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tapetros <tapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/05 15:52:59 by tapetros          #+#    #+#             */
-/*   Updated: 2022/03/18 21:04:04 by tapetros         ###   ########.fr       */
+/*   Created: 2022/03/05 15:52:59 by akhachat          #+#    #+#             */
+/*   Updated: 2022/04/05 17:19:50 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,32 @@ void	fill_env(char **env)
 
 void	start(char *str)
 {
-	int		len;
 	char	**spl;
 	int		i;
+	pid_t	pid;
 
 	i = -1;
 	spl = ft_split(str, '|');
-	len = rows_amount(spl);
-	g_g.cmds = malloc(sizeof (t_cmds) * len);
+	g_g.pipam = rows_amount(spl);
+	g_g.cmds = malloc(sizeof (t_cmds) * g_g.pipam);
 	if (!g_g.cmds)
 		ft_error("Can't malloc struct\n", 0);
 	while (spl[++i])
 		parsing(spl[i], i);
+	g_g.cmds[i].name = NULL;
+	if (g_g.cmds[1].name == NULL && check_builtin(g_g.cmds->name))
+		child_p(0);
+	i = 0;
+	while (i < g_g.pipam)
+	{
+		pid = fork();
+		if (pid == -1)
+			printf("Can't fork\n");
+		else if (pid == 0)
+			child_p(i);
+		i++;
+	}
+	sig_ignore();
+	waitpid(-1, 0, 0);
+	sig_init();
 }

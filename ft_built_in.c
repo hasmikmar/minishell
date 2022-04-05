@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_built_in.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tapetros <tapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/09 19:58:29 by tapetros          #+#    #+#             */
-/*   Updated: 2022/03/27 18:29:56 by tapetros         ###   ########.fr       */
+/*   Created: 2022/03/09 19:58:29 by akhachat          #+#    #+#             */
+/*   Updated: 2022/04/04 16:43:16 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_unset(char **args)
 	int		i;
 	t_list	*tmp;
 
-	i = 0;
+	i = 1;
 	while (args[i])
 	{
 		tmp = find_element(args[i]);
@@ -83,11 +83,11 @@ void	ft_export_third(void)
 void	ft_export(char **args)
 {
 	g_g.e = malloc(sizeof(t_exp));
-	if (args[0] == NULL || is_space(args[0]))
+	if (args[1] == NULL || is_space(args[1]))
 		print_export();
 	else
 	{
-		g_g.e->i = 0;
+		g_g.e->i = 1;
 		while (args[g_g.e->i])
 		{
 			g_g.e->flag1 = 0;

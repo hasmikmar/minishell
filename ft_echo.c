@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tapetros <tapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/09 19:58:29 by tapetros          #+#    #+#             */
-/*   Updated: 2022/03/28 18:59:52 by tapetros         ###   ########.fr       */
+/*   Created: 2022/03/09 19:58:29 by akhachat          #+#    #+#             */
+/*   Updated: 2022/04/04 16:43:16 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int	ft_echo(char **args)
 	int	flag;
 	int	i;
 
-	i = 0;
+	i = 1;
 	while (args[i] && is_with_n(args[i]))
 		i++;
-	if (i != 0)
+	if (i != 1)
 		flag = 1;
 	else
 		flag = 0;

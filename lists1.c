@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tapetros <tapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/03 19:57:50 by tapetros          #+#    #+#             */
-/*   Updated: 2022/03/18 14:48:21 by tapetros         ###   ########.fr       */
+/*   Created: 2022/03/03 19:57:50 by akhachat          #+#    #+#             */
+/*   Updated: 2022/04/04 16:43:16 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ char	**list_to_arr(void)
 	while (i != count)
 	{
 		arr[i] = ft_strjoin(temp->var, "=");
-		arr[i] = ft_strjoin(arr[i], temp->val);
+		if (temp->val)
+			arr[i] = ft_strjoin(arr[i], temp->val);
 		i++;
 		temp = temp->next;
 	}

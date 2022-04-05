@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tapetros <tapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/03 19:51:59 by tapetros          #+#    #+#             */
-/*   Updated: 2022/03/28 16:43:14 by tapetros         ###   ########.fr       */
+/*   Created: 2022/03/03 19:51:59 by akhachat          #+#    #+#             */
+/*   Updated: 2022/04/05 17:18:13 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@
 typedef struct s_cmds
 {
 	char	*name;
+	int		file_fd;
 	char	*file;
+	int		in;
+	int		out;
 	char	red;
 	int		lvl;
 	char	**args;
@@ -58,6 +61,7 @@ struct s_global
 	t_cmds	*cmds;
 	t_list	*lenv;
 	t_exp	*e;
+	int		pipam;
 }	g_g;
 
 void	ft_error(char *str, int code);
@@ -99,11 +103,17 @@ char	*quote_handling(char *s, int *i);
 char	*quote_checker(char *s, int *i, char c);
 void	parse_args(char *s, int num, int i);
 int		without_spaces(char *s, int i);
-int		is_builtins(int num);
+int		is_builtins(int num, char **env);
 int		check_red(char *str);
 int		check_sem_and_pipe(char *str);
 int		is_space(char *str);
 void	equal_handling(int num);
 void	sig_init(void);
+char	*env_path(char **env, char *ar);
+int		rows_amount(char **spl);
+void	child_p(int num);
+void	sig_default(void);
+void	sig_ignore(void);
+int		check_builtin(char *s);
 
 #endif

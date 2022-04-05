@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   equal_sign.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tapetros <tapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/27 16:34:25 by tapetros          #+#    #+#             */
-/*   Updated: 2022/03/28 16:36:43 by tapetros         ###   ########.fr       */
+/*   Created: 2022/03/27 16:34:25 by akhachat          #+#    #+#             */
+/*   Updated: 2022/04/04 16:43:16 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ void	equal_handling(int num)
 		}
 		i++;
 	}
-	s = ft_split_for_export(g_g.cmds[num].name);
-	equal_handling1(s);
 	i = 0;
 	while (g_g.cmds[num].args[i])
 	{

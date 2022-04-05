@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tapetros <tapetros@student.42.fr>          +#+  +:+       +#+        */
+/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/18 14:43:33 by tapetros          #+#    #+#             */
-/*   Updated: 2022/03/30 13:57:42 by tapetros         ###   ########.fr       */
+/*   Created: 2022/03/18 14:43:33 by akhachat          #+#    #+#             */
+/*   Updated: 2022/04/04 21:33:31 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ char	*dollar_sign(char *s, int *i)
 
 	j = 0;
 	str = malloc((ft_strlen(s) + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
 	(*i)++;
 	while (s[*i] != ' ' && s[*i] != '\0' && s[*i] != '\'' && s[*i] != '\"')
 	{
@@ -93,9 +95,10 @@ char	*dollar_sign(char *s, int *i)
 		(*i)++;
 	}
 	tmp = find_element(str);
-	free(str);
+	// free(str);
 	if (tmp == NULL)
 		return (NULL);
+		printf("%p\n", tmp->val);
 	return (tmp->val);
 }
 
@@ -104,6 +107,7 @@ char	*quote_checker(char *s, int *i, char c)
 	char	*str;
 	int		j;
 	char	*tmp;
+	char	*ret;
 
 	str = malloc((ft_strlen(s) + 1) * sizeof(char));
 	j = 0;
@@ -111,10 +115,11 @@ char	*quote_checker(char *s, int *i, char c)
 	while (s[*i] != c && s[*i])
 	{
 		if (s[*i] == '$' && s[*i + 1] != ' ' && s[*i + 1] != '\0' && c != '\'')
-		{
+		{	
 			tmp = str;
-			if (dollar_sign(s, i) != NULL)
-				str = ft_strjoin(tmp, dollar_sign(s, i));
+			ret = dollar_sign(s, i);
+			if (ret != NULL)
+				str = ft_strjoin(tmp, ret);
 			j = ft_strlen(str);
 			while (s[*i] != ' ' && s[*i] != '\0' && s[*i]
 				!= '\'' && s[*i] != '\"')
@@ -133,8 +138,12 @@ char	*quote_checker(char *s, int *i, char c)
 //OPEN FILE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 int	parse_file(char *s, int i, int num)
 {
+	int	fd;
+
 	i = without_spaces(s, i);
 	g_g.cmds[num].file = quote_handling(s, &i);
+	fd = open(g_g.cmds[num].file, O_CREAT);
+	close(fd);
 	while (s[i] && s[i] != ' ' && s[i] != '<' && s[i] != '>')
 		i++;
 	return (i);
@@ -145,18 +154,21 @@ char	*quote_handling(char *s, int *i)
 	int		len;
 	char	*buf;
 	char	*res;
+	char	*ret;
 
 	len = 0;
 	buf = malloc(sizeof(char) * (ft_strlen(s) + 1));
 	if (!buf)
 		ft_error("Can't malloc", 0);
-	while (s[*i] != ' ' && s[*i] && s[*i] != '>' && s[*i] != '<')
+	while (s[*i] != ' ' && s[*i] != '\0' && s[*i] != '>' && s[*i] != '<')
 	{
 		res = buf;
 		if (s[*i] == '$' && s[*i + 1] != ' ' && s[*i + 1] != '\0')
 		{
-			if (dollar_sign(s, i) != NULL)
-				buf = ft_strjoin(res, dollar_sign(s, i));
+			printf("%s\n", res);
+			ret = dollar_sign(s, i);
+			if (ret != NULL)
+				buf = ft_strjoin(res, ret);
 			len = ft_strlen(buf);
 		}
 		else if (s[*i] == '\"')
@@ -169,13 +181,15 @@ char	*quote_handling(char *s, int *i)
 			buf = ft_strjoin(res, quote_checker(s, i, '\''));
 			len = ft_strlen(buf);
 		}
-		else
+		else if (s[*i] != '\0')
 		{
 			buf[len] = s[*i];
 			len++;
 		}
+		// printf("%s\n", buf);
 		(*i)++;
 	}
+	// printf("%s\n", buf);
 	buf[len] = '\0';
 	return (buf);
 }
@@ -225,7 +239,12 @@ void	parsing(char *s, int num)
 	int		len;
 	int		ex;
 
+	
+	if (is_space(s))
+		return ;
 	parse_redirects(s, num);
+	g_g.cmds[num].in = 0;
+	g_g.cmds[num].out = 1;
 	len = 0;
 	buf = malloc(sizeof(char) * (ft_strlen(s) + 1));
 	if (!buf)
@@ -233,9 +252,11 @@ void	parsing(char *s, int num)
 	g_g.cmds[num].name = "";
 	i = without_spaces(s, 0);
 	len = i;
+	// printf("||||%s||||\n", s);
 	g_g.cmds[num].name = quote_handling(s, &i);
-	// printf("%s --- %d\n", g_g.cmds[num].name, i);
-	// printf("%c --- %d ---- %s\n", g_g.cmds[num].red, g_g.cmds[num].lvl, g_g.cmds[num].file);
+	// printf("TEST------\n");
+	printf("%s --- %d\n", g_g.cmds[num].name, i);
+	printf("%c --- %d ---- %s\n", g_g.cmds[num].red, g_g.cmds[num].lvl, g_g.cmds[num].file);
 	ex = ft_strlen(g_g.cmds[num].name) + len;
 	while (len < ex)
 	{
