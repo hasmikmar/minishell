@@ -6,7 +6,7 @@
 /*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:43:33 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/04 21:28:59 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/05 19:18:27 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	parse_args(char *s, int num, int i)
 	{
 		i = without_spaces(s, i);
 		g_g.cmds[num].args[j] = quote_handling(s, &i);
-		printf("%s\n", g_g.cmds[num].args[j]);
+		// printf("%s\n", g_g.cmds[num].args[j]);
 		j++;
 	}
 	g_g.cmds[num].args[j] = NULL;

@@ -6,7 +6,7 @@
 /*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/30 14:31:54 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/04 19:53:36 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/05 19:11:48 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	ft_strncmp_quote(const char *s1, const char *s2)
 	unsigned char	*st1;
 	unsigned char	*st2;
 
-	printf("==========%s====\n", s2);
 	st1 = (unsigned char *)s1;
 	st2 = (unsigned char *)s2;
 	i = 0;

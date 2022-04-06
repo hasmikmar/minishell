@@ -6,7 +6,7 @@
 /*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/09 19:58:29 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/04 16:43:16 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/05 19:14:13 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,6 @@ void	ft_exit(int code)
 		code += 256;
 	if (code >= 256)
 		code %= 256;
-	printf("exit\n");
+	printf("exit1\n");
 	exit(code);
 }

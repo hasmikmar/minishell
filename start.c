@@ -6,7 +6,7 @@
 /*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:52:59 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/05 17:19:50 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/05 19:45:22 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void	start(char *str)
 	while (spl[++i])
 		parsing(spl[i], i);
 	g_g.cmds[i].name = NULL;
-	if (g_g.cmds[1].name == NULL && check_builtin(g_g.cmds->name))
+	if (g_g.cmds[0].name != NULL && g_g.cmds[1].name == NULL && check_builtin(g_g.cmds[0].name) && !is_space(g_g.cmds[0].name))
 		child_p(0);
 	i = 0;
-	while (i < g_g.pipam)
+	while (g_g.cmds[i].name != NULL && !check_builtin(g_g.cmds[0].name) && i < g_g.pipam && !is_space(g_g.cmds[i].name))
 	{
 		pid = fork();
 		if (pid == -1)
@@ -67,6 +67,6 @@ void	start(char *str)
 		i++;
 	}
 	sig_ignore();
-	waitpid(-1, 0, 0);
+	waitpid(pid, 0, 0);
 	sig_init();
 }

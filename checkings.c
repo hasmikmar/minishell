@@ -6,7 +6,7 @@
 /*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 14:39:02 by tapetros          #+#    #+#             */
-/*   Updated: 2022/04/05 17:17:21 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/05 19:38:22 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	check_builtin(char *s)
 int	is_builtins(int num, char **env)
 {
 	char	*str;
-	printf("%s\n", g_g.cmds[num].args[0]);
+	// printf("%s\n", g_g.cmds[num].args[0]);
 	// printf("%s\n", g_g.cmds[0].name);
 	// printf(":%s\n", g_g.cmds[num].str_arg);
 	// printf("Test\n");

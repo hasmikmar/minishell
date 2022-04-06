@@ -6,7 +6,7 @@
 /*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:43:33 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/04 21:33:31 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/05 19:12:18 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,8 +255,8 @@ void	parsing(char *s, int num)
 	// printf("||||%s||||\n", s);
 	g_g.cmds[num].name = quote_handling(s, &i);
 	// printf("TEST------\n");
-	printf("%s --- %d\n", g_g.cmds[num].name, i);
-	printf("%c --- %d ---- %s\n", g_g.cmds[num].red, g_g.cmds[num].lvl, g_g.cmds[num].file);
+	// printf("%s --- %d\n", g_g.cmds[num].name, i);
+	// printf("%c --- %d ---- %s\n", g_g.cmds[num].red, g_g.cmds[num].lvl, g_g.cmds[num].file);
 	ex = ft_strlen(g_g.cmds[num].name) + len;
 	while (len < ex)
 	{
