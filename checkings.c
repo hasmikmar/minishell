@@ -6,7 +6,7 @@
 /*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 14:39:02 by tapetros          #+#    #+#             */
-/*   Updated: 2022/04/05 19:38:22 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/07 13:51:12 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ int	check_builtin(char *s)
 //PROCESSY ARDEN SARQVAC AAA
 int	is_builtins(int num, char **env)
 {
+	// printf("env_path%s\n", env_path(env, g_g.cmds[num].name));
 	char	*str;
 	// printf("%s\n", g_g.cmds[num].args[0]);
 	// printf("%s\n", g_g.cmds[0].name);
@@ -132,8 +133,11 @@ int	is_builtins(int num, char **env)
 	else if (is_equal_present(str))
 		equal_handling(num);
 	else if (execve(env_path(env, g_g.cmds[num].name),
-			g_g.cmds[num].args, env) == -1 && !is_space(g_g.cmds[num].name))
-		printf("%s: command not found\n", g_g.cmds[num].args[0]);
+			g_g.cmds[num].args, env) == -1)
+	{
+		printf("%s: command not found", g_g.cmds[num].args[0]);
+		ft_error("", 0);
+	}
 	free(env);
 	return (0);
 }

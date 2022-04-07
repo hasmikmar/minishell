@@ -6,12 +6,27 @@
 /*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 14:16:58 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/05 17:21:17 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/07 20:09:11 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 //cat /dev/urandom | head -10
+
+void	fd_close(void)
+{
+	int	i;
+
+	i = 0;
+	while (i < g_g.pipam)
+	{
+		if (g_g.cmds[i].out != 1)
+			close(g_g.cmds[i].out);
+		if (g_g.cmds[i].in != 0)
+			close(g_g.cmds[i].in);
+		i++;
+	}
+}
 
 void	child_p(int num)
 {
@@ -26,6 +41,8 @@ void	child_p(int num)
 			&& (dup2(g_g.cmds[num].in, 0) == -1))
 			printf("Error...Can't duplicate\n");
 	}
+	fd_close();
+	//printf("childum em\n");
 	if (g_g.cmds[num].args[0][0] == '/')
 		execve(g_g.cmds[num].name, g_g.cmds[num].args, env);
 	else

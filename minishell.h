@@ -6,7 +6,7 @@
 /*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 19:51:59 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/05 17:18:13 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/07 19:46:13 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,7 @@ void	child_p(int num);
 void	sig_default(void);
 void	sig_ignore(void);
 int		check_builtin(char *s);
+void	connect_pipes(int num);
+void	fd_close(void);
 
 #endif

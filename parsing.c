@@ -6,7 +6,7 @@
 /*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:43:33 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/05 19:12:18 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/07 19:40:07 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,12 +239,13 @@ void	parsing(char *s, int num)
 	int		len;
 	int		ex;
 
-	
 	if (is_space(s))
 		return ;
 	parse_redirects(s, num);
 	g_g.cmds[num].in = 0;
 	g_g.cmds[num].out = 1;
+	if (num)
+		connect_pipes(num);
 	len = 0;
 	buf = malloc(sizeof(char) * (ft_strlen(s) + 1));
 	if (!buf)
@@ -252,11 +253,7 @@ void	parsing(char *s, int num)
 	g_g.cmds[num].name = "";
 	i = without_spaces(s, 0);
 	len = i;
-	// printf("||||%s||||\n", s);
 	g_g.cmds[num].name = quote_handling(s, &i);
-	// printf("TEST------\n");
-	// printf("%s --- %d\n", g_g.cmds[num].name, i);
-	// printf("%c --- %d ---- %s\n", g_g.cmds[num].red, g_g.cmds[num].lvl, g_g.cmds[num].file);
 	ex = ft_strlen(g_g.cmds[num].name) + len;
 	while (len < ex)
 	{

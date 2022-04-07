@@ -6,11 +6,27 @@
 /*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 16:37:01 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/04 16:43:16 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/07 19:40:53 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	connect_pipes(int i)
+{
+	int	fd[2];
+
+	if (pipe(fd) == -1)
+		printf("Error while creating a pipe\n");
+	if (g_g.cmds[i - 1].out != 1)
+		close(fd[1]);
+	else
+		g_g.cmds[i - 1].out = fd[1];
+	if (g_g.cmds[i].in != 0)
+		close(fd[0]);
+	else
+		g_g.cmds[i].in = fd[0];
+}
 
 int	get_index(char **env)
 {

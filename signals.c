@@ -6,7 +6,7 @@
 /*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 17:32:38 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/04 18:10:22 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/07 19:49:13 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	ft_cancel(void)
 static	void	reprompt(int sig)
 {
 	(void)sig;
-
 	ft_cancel();
 	if (sig == SIGINT)
 	{

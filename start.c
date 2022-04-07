@@ -6,7 +6,7 @@
 /*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:52:59 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/05 19:45:22 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/07 20:07:25 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,22 @@ void	start(char *str)
 	g_g.cmds[i].name = NULL;
 	if (g_g.cmds[0].name != NULL && g_g.cmds[1].name == NULL && check_builtin(g_g.cmds[0].name) && !is_space(g_g.cmds[0].name))
 		child_p(0);
-	i = 0;
-	while (g_g.cmds[i].name != NULL && !check_builtin(g_g.cmds[0].name) && i < g_g.pipam && !is_space(g_g.cmds[i].name))
+	//!check_builtin(g_g.cmds[0].name)
+	else
 	{
-		pid = fork();
-		if (pid == -1)
-			printf("Can't fork\n");
-		else if (pid == 0)
-			child_p(i);
-		i++;
+		i = 0;
+		while (g_g.cmds[i].name != NULL && i < g_g.pipam && !is_space(g_g.cmds[i].name))
+		{
+			pid = fork();
+			if (pid == -1)
+				printf("Can't fork\n");
+			else if (pid == 0)
+				child_p(i);
+			sig_default();
+			i++;
+		}
 	}
 	sig_ignore();
-	waitpid(pid, 0, 0);
+	waitpid(-1, 0, 0);
 	sig_init();
 }
