@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkings.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmargary <hmargary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 14:39:02 by tapetros          #+#    #+#             */
-/*   Updated: 2022/04/07 13:51:12 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/10 14:12:14 by hmargary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,18 +84,54 @@ int	check_builtin(char *s)
 		return (0);
 }
 
+/* The same as get_index */
+int	plz_get_index(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (!(ft_strncmp(env[i], "PATH", 4)))
+			return (i);
+		++i;
+	}
+	return (0);
+}
+
+void plz_exec(char **env, char *ar, int num)
+{
+	char	**path;
+	int		j;
+	char	*final_path;
+	char	*cur;
+
+	
+	path = ft_split(env[plz_get_index(env)] + 5, ':');
+	j = -1;
+	while (path[++j])
+	{
+		cur = ft_strjoin(path[j], "/");
+		final_path = ft_strjoin(cur, ar);
+		printf("final_pathe: %s\n", final_path);
+		if (execve(final_path, g_g.cmds[num].args, env) == -1)
+		{
+			free(cur);
+			free(final_path);
+			continue;
+		}
+		
+	}
+	printf("after exec\n");
+}
+
 //PROCESSY ARDEN SARQVAC AAA
 int	is_builtins(int num, char **env)
 {
-	// printf("env_path%s\n", env_path(env, g_g.cmds[num].name));
 	char	*str;
-	// printf("%s\n", g_g.cmds[num].args[0]);
-	// printf("%s\n", g_g.cmds[0].name);
-	// printf(":%s\n", g_g.cmds[num].str_arg);
-	// printf("Test\n");
+
 	if (!(ft_strncmp_quote("exit", g_g.cmds[num].name)))
 		ft_atoi_exit(g_g.cmds[num].str_arg);
-	// printf("Valod\n");
 	str = to_lower(g_g.cmds[num].name);
 	if (!(ft_strncmp_quote("echo", str)))
 	{
@@ -110,8 +146,6 @@ int	is_builtins(int num, char **env)
 		ft_pwd();
 	else if (!(ft_strncmp_quote("env", str)))
 	{
-		//argumentneri pahy kisat a
-		// while (is_equal_present(g_g.cmds[num].args[i]))
 		if (is_env_arg(num) || !g_g.cmds[num].args
 			|| is_space(g_g.cmds[num].args[1]))
 			print_list();
@@ -132,10 +166,10 @@ int	is_builtins(int num, char **env)
 	}
 	else if (is_equal_present(str))
 		equal_handling(num);
-	else if (execve(env_path(env, g_g.cmds[num].name),
-			g_g.cmds[num].args, env) == -1)
+	else
 	{
-		printf("%s: command not found", g_g.cmds[num].args[0]);
+		plz_exec(env, g_g.cmds[num].name, num);
+		printf("%s: command not found\n", g_g.cmds[num].args[0]);
 		ft_error("", 0);
 	}
 	free(env);
