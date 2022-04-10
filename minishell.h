@@ -6,7 +6,7 @@
 /*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 19:51:59 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/07 19:46:13 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/09 17:14:22 by akhachat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <readline/history.h>
 # include <fcntl.h>
 # include <termios.h>
+# include <sys/wait.h>
+# include <signal.h>
 
 typedef struct s_cmds
 {
@@ -62,6 +64,7 @@ struct s_global
 	t_list	*lenv;
 	t_exp	*e;
 	int		pipam;
+	int		dollar_len;
 }	g_g;
 
 void	ft_error(char *str, int code);
@@ -111,11 +114,12 @@ void	equal_handling(int num);
 void	sig_init(void);
 char	*env_path(char **env, char *ar);
 int		rows_amount(char **spl);
-void	child_p(int num);
+void	child_process(int num);
 void	sig_default(void);
 void	sig_ignore(void);
 int		check_builtin(char *s);
 void	connect_pipes(int num);
 void	fd_close(void);
+char	*dollar_sign(char *s, int *i);
 
 #endif
