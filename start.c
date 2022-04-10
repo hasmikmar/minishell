@@ -6,7 +6,7 @@
 /*   By: hmargary <hmargary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 15:52:59 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/10 14:31:02 by hmargary         ###   ########.fr       */
+/*   Updated: 2022/04/10 14:34:18 by hmargary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	starting_processes(void)
 		while (g_g.cmds[i].name != NULL && i < g_g.pipam
 			&& !is_space(g_g.cmds[i].name))
 		{
-			printf("MTA\n");
 			pid = fork();
 			if (pid == -1)
 				printf("Can't fork\n");
@@ -62,7 +61,6 @@ void	starting_processes(void)
 			{
 				sig_default();
 				child_process(i);
-				printf("in fork: %d\n", pid);
 			}
 			i++;
 		}
@@ -70,10 +68,7 @@ void	starting_processes(void)
 		sig_ignore();
 		int j = 0;
 		while (j++ < g_g.pipam)
-		{
-			printf("waiting\n");
 			wait(NULL);
-		}
 		sig_init();
 	}
 }
@@ -92,14 +87,5 @@ void	start(char *str)
 	while (spl[++i])
 		parsing(spl[i], i);
 	g_g.cmds[i].name = NULL;
-	
-	int k = -1;
-	
-	while (++k < g_g.pipam)
-	{
-		int l = 0;
-		while (g_g.cmds[k].args[l])
-			printf("cmd: %d, args: %s\n", k, g_g.cmds[k].args[l++]);	
-	}
 	starting_processes();
 }

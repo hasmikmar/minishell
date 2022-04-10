@@ -6,7 +6,7 @@
 /*   By: hmargary <hmargary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 14:39:02 by tapetros          #+#    #+#             */
-/*   Updated: 2022/04/10 14:12:14 by hmargary         ###   ########.fr       */
+/*   Updated: 2022/04/10 14:35:21 by hmargary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ void plz_exec(char **env, char *ar, int num)
 	{
 		cur = ft_strjoin(path[j], "/");
 		final_path = ft_strjoin(cur, ar);
-		printf("final_pathe: %s\n", final_path);
 		if (execve(final_path, g_g.cmds[num].args, env) == -1)
 		{
 			free(cur);
@@ -122,7 +121,6 @@ void plz_exec(char **env, char *ar, int num)
 		}
 		
 	}
-	printf("after exec\n");
 }
 
 //PROCESSY ARDEN SARQVAC AAA
