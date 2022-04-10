@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmargary <hmargary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:43:33 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/07 19:40:07 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/10 14:25:52 by hmargary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// int	is_env(char **s)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while ((*s) && (*s)[i])
-// 	{
-// 		if ((*s)[i] == '\'' && is_quote(s, &i))
-// 			return ;
-// 		if ((*s)[i] && (*s)[i] == '\\')
-// 		{
-
-// 		}
-// 	}
-// }
 
 void	env_free(char **s)
 {
@@ -47,36 +31,6 @@ int	without_spaces(char *s, int i)
 	return (i);
 }
 
-// int	name_check(char *s, char c)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	q;
-
-// 	i = -1;
-// 	j = 1;
-// 	while (s[++i])
-// 	{
-// 		if (s[i] == '\\' && (s[i + 1] == '\'' || s[i + 1] == '"'
-// 				|| s[i + 1] == '\\' || s[i + 1] == c))
-// 			i++;
-// 		else if (s[i] == c)
-// 			j++;
-// 		else if (s[i] && (s[i] == '"' || s[i] == '\''))
-// 		{
-// 			q = s[i++];
-// 			while (s[i] && s[i] != q)
-// 			{
-// 				if (s[i] == '\\' && (s[i] + 1 == q || s[i] + 1 == '\\')
-// 					&& q == '"')
-// 					i++;
-// 				i++;
-// 			}
-// 		}
-// 	}
-// 	return (j);
-// }
-
 char	*dollar_sign(char *s, int *i)
 {
 	char	*str;
@@ -94,104 +48,35 @@ char	*dollar_sign(char *s, int *i)
 		j++;
 		(*i)++;
 	}
+	(*i)--;
+	str[j] = '\0';
+	g_g.dollar_len = ft_strlen(str);
 	tmp = find_element(str);
 	// free(str);
 	if (tmp == NULL)
 		return (NULL);
-		printf("%p\n", tmp->val);
 	return (tmp->val);
 }
 
-char	*quote_checker(char *s, int *i, char c)
-{
-	char	*str;
-	int		j;
-	char	*tmp;
-	char	*ret;
-
-	str = malloc((ft_strlen(s) + 1) * sizeof(char));
-	j = 0;
-	(*i)++;
-	while (s[*i] != c && s[*i])
-	{
-		if (s[*i] == '$' && s[*i + 1] != ' ' && s[*i + 1] != '\0' && c != '\'')
-		{	
-			tmp = str;
-			ret = dollar_sign(s, i);
-			if (ret != NULL)
-				str = ft_strjoin(tmp, ret);
-			j = ft_strlen(str);
-			while (s[*i] != ' ' && s[*i] != '\0' && s[*i]
-				!= '\'' && s[*i] != '\"')
-				i++;
-		}
-		else
-		{
-			str[j] = s[*i];
-			j++;
-			(*i)++;
-		}
-	}
-	str[j] = '\0';
-	return (str);
-}
 //OPEN FILE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 int	parse_file(char *s, int i, int num)
 {
 	int	fd;
 
 	i = without_spaces(s, i);
 	g_g.cmds[num].file = quote_handling(s, &i);
+	/*
+	First of all you cannot open all the files in the samewaybecause files with specific notations need to be opened like this
+	if redirection > ....  fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644) => cmd.out = fd
+	if redirection >> .... fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644) => cmd.out = fd
+	if redirection < ....  fd = open(file, O_CREAT | O_RDONLY, 0644) => cmd.in = fd
+	*/
 	fd = open(g_g.cmds[num].file, O_CREAT);
 	close(fd);
 	while (s[i] && s[i] != ' ' && s[i] != '<' && s[i] != '>')
 		i++;
 	return (i);
-}
-
-char	*quote_handling(char *s, int *i)
-{
-	int		len;
-	char	*buf;
-	char	*res;
-	char	*ret;
-
-	len = 0;
-	buf = malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (!buf)
-		ft_error("Can't malloc", 0);
-	while (s[*i] != ' ' && s[*i] != '\0' && s[*i] != '>' && s[*i] != '<')
-	{
-		res = buf;
-		if (s[*i] == '$' && s[*i + 1] != ' ' && s[*i + 1] != '\0')
-		{
-			printf("%s\n", res);
-			ret = dollar_sign(s, i);
-			if (ret != NULL)
-				buf = ft_strjoin(res, ret);
-			len = ft_strlen(buf);
-		}
-		else if (s[*i] == '\"')
-		{
-			buf = ft_strjoin(res, quote_checker(s, i, '\"'));
-			len = ft_strlen(buf);
-		}
-		else if (s[*i] == '\'')
-		{
-			buf = ft_strjoin(res, quote_checker(s, i, '\''));
-			len = ft_strlen(buf);
-		}
-		else if (s[*i] != '\0')
-		{
-			buf[len] = s[*i];
-			len++;
-		}
-		// printf("%s\n", buf);
-		(*i)++;
-	}
-	// printf("%s\n", buf);
-	buf[len] = '\0';
-	return (buf);
 }
 
 void	parse_redirects(char *s, int num)
@@ -237,10 +122,10 @@ void	parsing(char *s, int num)
 	int		i;
 	char	*buf;
 	int		len;
-	int		ex;
 
 	if (is_space(s))
 		return ;
+	g_g.dollar_len = 0;
 	parse_redirects(s, num);
 	g_g.cmds[num].in = 0;
 	g_g.cmds[num].out = 1;
@@ -254,12 +139,6 @@ void	parsing(char *s, int num)
 	i = without_spaces(s, 0);
 	len = i;
 	g_g.cmds[num].name = quote_handling(s, &i);
-	ex = ft_strlen(g_g.cmds[num].name) + len;
-	while (len < ex)
-	{
-		s[len] = ' ';
-		len++;
-	}
 	g_g.cmds->str_arg = ft_strtrim(s, " ");
 	parse_args(s, num, i);
 }
