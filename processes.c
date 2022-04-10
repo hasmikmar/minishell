@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmargary <hmargary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 14:16:58 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/07 20:09:11 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/10 14:29:17 by hmargary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,25 @@ void	fd_close(void)
 	}
 }
 
-void	child_p(int num)
+void	child_process(int num)
 {
 	char	**env;
-	//stugel redirection ka te hce, ete ka dra het dup anel, ete che pipei, verjin commandy stdouti het dup anel
-	// if (dup2(fd[1], 1) == -1)
-	// printf("Can't duplicate\n");
+	
 	env = list_to_arr();
-	if (!g_g.cmds[1].name && !check_builtin(g_g.cmds[num].name))
+	if (!g_g.cmds[1].name || !check_builtin(g_g.cmds[num].name))
 	{
 		if ((dup2(g_g.cmds[num].out, 1) == -1)
-			&& (dup2(g_g.cmds[num].in, 0) == -1))
+			|| (dup2(g_g.cmds[num].in, 0) == -1))
 			printf("Error...Can't duplicate\n");
+		fd_close();
+		g_g.cmds[num].out = 1;
 	}
-	fd_close();
-	//printf("childum em\n");
-	if (g_g.cmds[num].args[0][0] == '/')
+	if (g_g.cmds[num].args[0][0] == '.' || g_g.cmds[num].args[0][0] == '/')
+	{
 		execve(g_g.cmds[num].name, g_g.cmds[num].args, env);
+		printf("%s: command not found\n", g_g.cmds[num].args[0]);
+		ft_error("", 0);
+	}
 	else
 		is_builtins(num, env);
 }
