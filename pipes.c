@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmargary <hmargary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/05 16:37:01 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/07 19:40:53 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/10 14:28:03 by hmargary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*env_path(char **env, char *ar)
 	int		fd;
 	char	*cur;
 
-	path = ft_split(env[get_index(env)] + 5, ':');
+	path = ft_split(env[get_index(env)] + 5, ':');	
 	j = -1;
 	while (path[++j])
 	{
