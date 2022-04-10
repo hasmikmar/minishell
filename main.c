@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akhachat <akhachat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hmargary <hmargary@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 19:51:34 by akhachat          #+#    #+#             */
-/*   Updated: 2022/04/05 19:15:38 by akhachat         ###   ########.fr       */
+/*   Updated: 2022/04/10 11:43:31 by hmargary         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,17 @@ static void	fintuflyushka(void)
 	write(1, "░▒▓██████████►╬◄██████████▓▒░\n", len);
 }
 
+void	mini_checkings(char *str)
+{
+	if (!str)
+	{
+		free(str);
+		ft_error("exit", 0);
+	}
+	if (ft_strlen(str))
+		add_history(str);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char	*str;
@@ -36,13 +47,7 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		str = readline("minishell: ");
-		if (!str)
-		{
-			free(str);
-			ft_error("exit", 0);
-		}
-		if (ft_strlen(str))
-			add_history(str);
+		mini_checkings(str);
 		if (!check_quotes(str) || !check_sem_and_pipe(str) || !check_red(str))
 		{
 			printf("Syntax error\n");
